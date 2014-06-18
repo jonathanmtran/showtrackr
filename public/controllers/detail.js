@@ -26,3 +26,4 @@ angular.module('MyApp')
         })[0];
       });
     }]);
+  
