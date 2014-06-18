@@ -313,6 +313,9 @@ agenda.define('send email alert', function(job, done) {
       return new Date(episode.firstAired) > new Date();
     })[0];
 
+    if(typeof upcomingEpisode === 'undefined')
+      return;
+
     var smtpTransport = nodemailer.createTransport('SMTP', {
       service: 'Mailgun',
       auth: { user: mailgunUser, pass: mailgunPass }
