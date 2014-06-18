@@ -25,6 +25,8 @@ var LocalStrategy = require('passport-local').Strategy;
 var agenda = require('agenda')({ db: { address: mongodbHost + ':27017/test' } });
 var sugar = require('sugar');
 var nodemailer = require('nodemailer');
+// Step 12: Optimization
+var compress = require('compression')
 
 // Show schema
 var showSchema = new mongoose.Schema({
@@ -86,6 +88,8 @@ mongoose.connect(mongodbHost);
 var app = express();
 
 app.set('port', process.env.PORT || 3000);
+// Step 12: Optimization
+app.use(compress());
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded());
@@ -93,7 +97,7 @@ app.use(cookieParser());
 app.use(session({ secret: 'keyboard cat' }));
 app.use(passport.initialize());
 app.use(passport.session());
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, 'public'), { maxAge: 86400000 }));
 
 // Routes
 app.get('/api/shows', function(req, res, next) {
