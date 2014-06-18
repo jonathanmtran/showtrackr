@@ -6,12 +6,13 @@ var csso = require('gulp-csso');
 var uglify = require('gulp-uglify');
 var concat = require('gulp-concat');
 var templateCache = require('gulp-angular-templatecache');
+var uncss = require('gulp-uncss');
 
 gulp.task('sass', function() {
   gulp.src('public/stylesheets/style.scss')
     .pipe(plumber())
     .pipe(sass())
-    /*.pipe(uncss({
+    .pipe(uncss({
       html: [
         'public/index.html',
         'public/views/add.html',
@@ -20,7 +21,7 @@ gulp.task('sass', function() {
         'public/views/login.html',
         'public/views/signup.html'
       ]
-    }))*/
+    }))
     .pipe(csso())
     .pipe(gulp.dest('public/stylesheets'));
 });
