@@ -1,5 +1,8 @@
 // MongoDB server
 var mongodbHost = 'localhost';
+var mongodbPort = 27017;
+var mongodbName = 'showtrackr';
+var mongodbUri  = 'mongodb://' + mongodbHost + ':' + mongodbPort + '/' + mongodbName;
 
 // Mailgun
 var mailgunUser = 'no-reply@example.com';
@@ -22,7 +25,7 @@ var session = require('express-session');
 var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
 // Step 11: Email notifications
-var agenda = require('agenda')({ db: { address: mongodbHost + ':27017/test' } });
+var agenda = require('agenda')({ db: { address: mongodbUri } });
 var sugar = require('sugar');
 var nodemailer = require('nodemailer');
 // Step 12: Optimization
@@ -83,7 +86,7 @@ userSchema.methods.comparePassword = function(candidatePassword, cb) {
 var User = mongoose.model('User', userSchema);
 var Show = mongoose.model('Show', showSchema);
 
-mongoose.connect(mongodbHost);
+mongoose.connect(mongodbUri);
 
 var app = express();
 
